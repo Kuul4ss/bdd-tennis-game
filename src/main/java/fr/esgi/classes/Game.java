@@ -1,46 +1,36 @@
 package fr.esgi.classes;
 public class Game {
-    private  GameScore playerAScore;
-    private  GameScore playerBScore;
 
+    private ScoreDisplayer scoreDisplayer;
 
+    public Player playerA;
+    public Player playerB;
+
+    public String score;
 
     public Game(){
-        playerAScore = GameScore.LOVE;
-        playerBScore = GameScore.LOVE;
+        scoreDisplayer = new ScoreDisplayer();
     }
 
-    public String playerAScores() {
-            if(playerBScore == GameScore.ADVANTAGE) {
-                playerBScore = GameScore.FORTY;
-            } else {
-                playerAScore = playerAScore.getNextScore(playerBScore);
-            }
-        return getScore();
-    }
-
-    public String playerBScores() {
-            if(playerAScore == GameScore.ADVANTAGE) {
-                playerAScore = GameScore.FORTY;
-            } else {
-                playerBScore = playerBScore.getNextScore(playerAScore);
-            }
-        return getScore();
-    }
-
-    public String getScore() {
-        if (playerAScore.isDeuceScore(playerBScore)) {
-            return "Deuce";
-        } else if (playerAScore == GameScore.ADVANTAGE) {
-            return "Advantage A";
-        } else if(playerBScore == GameScore.ADVANTAGE){
-            return "Advantage B";
-        } else if (playerAScore == GameScore.WIN) {
-            return "Player A wins";
-        } else if (playerBScore == GameScore.WIN) {
-            return "Player B wins";
-        } else {
-            return playerAScore.getScoreString()+ "-" +  playerBScore.getScoreString();
+    public void scorePointPlayerA() {
+        if(playerB.score() == Score.ADVANTAGE) {
+            playerB = new Player(playerB.name(), Score.FORTY);
         }
+        else {
+            playerA = playerA.scorePoint(playerB.score());
+        }
+    };
+
+    public void scorePointPlayerB() {
+        if(playerA.score() == Score.ADVANTAGE) {
+            playerA = new Player(playerA.name(), Score.FORTY);
+        }
+        else {
+            playerB = playerB.scorePoint(playerA.score());
+        }
+    };
+
+    public void updateScoreDisplayed() {
+        this.score = scoreDisplayer.displayScore(playerA, playerB);
     }
 }

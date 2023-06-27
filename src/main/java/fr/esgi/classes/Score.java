@@ -1,8 +1,6 @@
 package fr.esgi.classes;
 
-import java.util.Objects;
-
-public enum GameScore {
+public enum Score {
     LOVE("0"),
     FIFTEEN("15"),
     THIRTY("30"),
@@ -14,7 +12,7 @@ public enum GameScore {
 
     private final String scoreString;
 
-    GameScore(String scoreString) {
+    Score(String scoreString) {
         this.scoreString = scoreString;
     }
 
@@ -22,17 +20,17 @@ public enum GameScore {
         return scoreString;
     }
 
-    public GameScore getNextScore(GameScore otherPlayer) {
+    public Score getNextScore(Score otherPlayer) {
         if (this == FORTY && otherPlayer == FORTY) {
             return ADVANTAGE;
         } else if (this == ADVANTAGE || this == FORTY) {
             return WIN;
         } else {
-            return GameScore.values()[this.ordinal() + 1];
+            return Score.values()[this.ordinal() + 1];
         }
     }
 
-    public boolean isDeuceScore(GameScore opponentScore) {
+    public boolean isDeuceScore(Score opponentScore) {
         return (this == FORTY && opponentScore == FORTY);
     }
 }
